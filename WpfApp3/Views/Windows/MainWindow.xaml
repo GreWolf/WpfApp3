@@ -3,19 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cmd="clr-namespace:WpfApp3.Infrastructure.Commands"
         xmlns:vm="clr-namespace:WpfApp3.ViewModels"
         xmlns:l="clr-namespace:WpfApp3"
         
         mc:Ignorable="d"
         Title="{Binding Path=Title}" Height="450" Width="800">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="Q" Command="{Binding CloseApplicationCommand}"/>
+    </Window.InputBindings>
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-
+    <Window.Resources>
+        <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Выход" Command="{Binding CloseApplicationCommand}"/>
+                <!--<MenuItem Header="Выход" Command="{Binding CloseApplicationCommand}"/>-->
+                <!--<MenuItem Header="Выход" Command="{StaticResource CloseApplicationCommand}"/>-->
+                <MenuItem Header="Выход" Command="{StaticResource CloseApplicationCommand}">
+                    <!--<MenuItem.Command>
+                        <cmd:CloseApplicationCommand/>
+                    </MenuItem.Command>-->
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Помощь">
                 <MenuItem Header="О программе"/>
@@ -48,7 +60,19 @@
                                RadiusY="20" 
                                StrokeThickness="3" 
                                Fill="#FF3163DC" Margin="5,10,5,10"/>
-                    <Ellipse Grid.Column="1" Grid.Row="0" Opacity="0.5" Margin="10,10,10,10" Fill="#FFB44040" StrokeThickness="3" Stroke="#FF161AD9"/>
+                    <Ellipse Grid.Column="1" 
+                             Grid.Row="0" 
+                             Opacity="0.5" 
+                             Margin="10,10,10,10" 
+                             Fill="#FFB44040" 
+                             StrokeThickness="3" 
+                             Stroke="#FF161AD9">
+                        <Ellipse.InputBindings>
+                            <MouseBinding 
+                                Command="{StaticResource CloseApplicationCommand}" 
+                                MouseAction="LeftDoubleClick"/>
+                        </Ellipse.InputBindings>
+                    </Ellipse>
                     <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="4" HorizontalAlignment="Right"/>
                 </Grid>
             </TabItem>
