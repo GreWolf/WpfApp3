@@ -1,15 +1,27 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp3.Infrastructure.Commands;
 using WpfApp3.ViewModels.Base;
+using DataPoint = WpfApp3.Models.DataPoint;
 
 namespace WpfApp3.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        #region TestDataPoints
+        private IEnumerable<DataPoint> _TestDataPoints;
+        public IEnumerable<DataPoint> TestDataPoints
+        { 
+            get => _TestDataPoints;
+            set => Set(ref _TestDataPoints, value);
+        }
+        #endregion
+
         #region Title - Заголовок окна
         private string _Title = "Заголово окна";
 
@@ -67,6 +79,19 @@ namespace WpfApp3.ViewModels
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
 
             #endregion
+
+            var data_points = new List<DataPoint>((int)(360 / 0.1));
+
+            const double to_rad = Math.PI / 180;
+
+            for(var x = 0d; x <= 360; x += 0.1)
+            {
+                var y = Math.Sin(x * to_rad);
+                data_points.Add(new DataPoint { XValue = x, YValue = y });
+            }
+
+            TestDataPoints = data_points;
+
         }
     }
 }
