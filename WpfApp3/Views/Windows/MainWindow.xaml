@@ -31,9 +31,25 @@
                     </MenuItem.Command>-->
                 </MenuItem>
             </MenuItem>
+
             <MenuItem Header="Помощь">
                 <MenuItem Header="О программе"/>
             </MenuItem>
+
+            <MenuItem Command="{Binding ChangeTabIndexCommnad}" CommandParameter="-1">
+                <MenuItem.Header>
+                    <fa:ImageAwesome Height="12" Icon="Regular_CaretSquareLeft"/>
+                </MenuItem.Header>
+            </MenuItem>
+
+            <MenuItem Command="{Binding ChangeTabIndexCommnad}" CommandParameter="1">
+                <MenuItem.Header>
+                    <fa:ImageAwesome Height="12" Icon="Regular_CaretSquareRight"/>
+                </MenuItem.Header>
+            </MenuItem>
+
+            <MenuItem Header="{Binding SelectedPageIndex}" IsEnabled="False"></MenuItem>
+            
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
@@ -43,7 +59,7 @@
                 <ProgressBar Width="200" Height="10" Value="45" Background="{x:Null}" Foreground="#7F06B025"></ProgressBar>
             </StatusBarItem>
         </StatusBar>
-        <TabControl TabStripPlacement="Top">
+        <TabControl TabStripPlacement="Top" SelectedIndex="{Binding SelectedPageIndex}">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -96,6 +112,8 @@
                                     DataFieldY="YValue"/>
                 </oxy:Plot>
             </TabItem>
+
+            <TabItem Header="Вкладка 2"></TabItem>
 
         </TabControl>
     </DockPanel>
